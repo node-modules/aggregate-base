@@ -3,17 +3,20 @@
   "version": "1.0.0",
   "description": "Base class for aggregate operation, sush as http request, write file.",
   "dependencies": {
+    "await-event": "^2.1.0",
+    "is-type-of": "^1.2.0",
+    "mz-modules": "^2.1.0"
   },
   "devDependencies": {
     "autod": "^3.0.1",
-    "egg-bin": "^4.3.7",
+    "egg-bin": "^4.8.2",
     "egg-ci": "^1.8.0",
-    "eslint": "^4.18.1",
-    "eslint-config-egg": "^7.0.0",
-    "webstorm-disable-index": "^1.2.0"
+    "eslint": "^5.4.0",
+    "eslint-config-egg": "^7.1.0",
+    "mm": "^2.4.0"
   },
   "engines": {
-    "node": ">=6.0.0"
+    "node": ">=8.6.0"
   },
   "scripts": {
     "autod": "autod",
@@ -25,15 +28,18 @@
     "pkgfiles": "egg-bin pkgfiles"
   },
   "ci": {
-    "version": "8"
+    "version": "8, 10",
+    "license": true
   },
-  "eslintIgnore": [ "coverage", "dist" ],
+  "eslintIgnore": [
+    "coverage",
+    "dist"
+  ],
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "git@github.com:node-modules/aggregate-base.git"
   },
   "files": [
-    "lib",
     "index.js"
   ],
   "author": "",
