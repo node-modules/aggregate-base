@@ -1,4 +1,13 @@
 
+1.1.0 / 2018-08-25
+==================
+
+**features**
+  * [[`935af46`](http://github.com/node-modules/aggregate-base/commit/935af4644cbf53760eaae94b85442428fc80b131)] - feat: support interceptTransform (#2) (Haoliang Gao <<sakura9515@gmail.com>>)
+
+**fixes**
+  * [[`f3ea492`](http://github.com/node-modules/aggregate-base/commit/f3ea4926cb9c7e7e22bd441997ee242d8d44a277)] - fix: check function type (#3) (Haoliang Gao <<sakura9515@gmail.com>>)
+
 1.0.0 / 2018-08-25
 ==================
 
