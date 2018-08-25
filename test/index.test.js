@@ -163,4 +163,32 @@ describe('test/index.test.js', () => {
     assert.deepEqual(logs, [[[ 'a' ]]]);
   });
 
+  it('should be transformed when intercept', async () => {
+    const logs = [];
+    class Logger {
+      get data() {
+        return 'a';
+      }
+      info() {}
+      flush(data) {
+        logs.push(data);
+      }
+    }
+
+    const AggregateLogger = aggregate(Logger, {
+      interval: 1,
+      intercept: 'info',
+      interceptTransform(num) {
+        return this.data + String(num);
+      },
+      flush: 'flush',
+    });
+
+    const logger = new AggregateLogger();
+    logger.info(1);
+    logger.info(2);
+    await sleep(10);
+    assert.deepEqual(logs, [[ 'a1', 'a2' ]]);
+  });
+
 });

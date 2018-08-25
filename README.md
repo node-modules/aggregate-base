@@ -75,6 +75,7 @@ The module will create a loop (configured by interval), it will collect data by 
 
 - interval: the time between flush
 - intercept: the intercept method name of class, the method will not be run.
+- interceptTransform: the function that can tranform the arguments of intercept method
 - flush: the flush method name of class.
 - close: the close method name of class, it should be a async function.
 

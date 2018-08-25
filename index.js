@@ -14,6 +14,7 @@ const defaultOptions = {
   flush: '',
   intercept: '',
   close: '',
+  interceptTransform: null,
 };
 
 class AggregateClass extends Event {
@@ -68,6 +69,10 @@ class AggregateClass extends Event {
   }
 
   intercept(...args) {
+    const { interceptTransform, target } = this.options;
+    if (interceptTransform) {
+      args = interceptTransform.apply(target, args);
+    }
     this.cache.push(args);
   }
 
