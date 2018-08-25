@@ -23,14 +23,25 @@ class AggregateClass extends Event {
 
     this.options = { ...defaultOptions, ...options };
 
-    assert(this.options.target, 'target is required');
+    const target = this.options.target;
+    assert(target, 'target is required');
+
     assert(this.options.flush, 'flush is required');
-    assert(this.options.target[this.options.flush],
-      `Can't find method ${this.options.flush} on target`);
+    assert(is.function(target[this.options.flush]),
+      `method ${this.options.flush} should be function on target`);
+
+    if (this.options.intercept) {
+      assert(is.function(target[this.options.intercept]),
+        `method ${this.options.intercept} should be function on target`);
+    }
     if (this.options.close) {
-      assert(is.asyncFunction(this.options.target[this.options.close]),
+      assert(is.asyncFunction(target[this.options.close]),
         `method ${this.options.close} should be async function on target`);
     }
+
+    // self binding
+    this.closeFunction = this.close.bind(this);
+    this.interceptFunction = this.intercept.bind(this);
 
     this.cache = [];
     this.startInterval();
@@ -101,9 +112,9 @@ function wrap(Target, options) {
           get: (target, prop) => {
             switch (prop) {
               case this.options.intercept:
-                return this.intercept.bind(this);
+                return this.interceptFunction;
               case this.options.close:
-                return this.close.bind(this);
+                return this.closeFunction;
               default:
                 return target[prop];
             }

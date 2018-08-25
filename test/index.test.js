@@ -50,7 +50,7 @@ describe('test/index.test.js', () => {
     const logs = [];
     class Logger {
       info() {}
-      flush(data) {
+      async flush(data) {
         logs.push(data);
       }
     }
@@ -83,7 +83,7 @@ describe('test/index.test.js', () => {
       new Class();
       throw new Error('should not run');
     } catch (err) {
-      assert(err.message === 'Can\'t find method unknown on target');
+      assert(err.message === 'method unknown should be function on target');
     }
   });
 
@@ -189,6 +189,45 @@ describe('test/index.test.js', () => {
     logger.info(2);
     await sleep(10);
     assert.deepEqual(logs, [[ 'a1', 'a2' ]]);
+  });
+
+  it('should support flush function type', async () => {
+    let logs = [];
+    class Custom {
+      info() {}
+      fun1(data) {
+        logs.push(data);
+      }
+      async fun2(data) {
+        await sleep(1000);
+        logs.push(data);
+      }
+    }
+
+    const Custom1 = aggregate(Custom, {
+      interval: 100,
+      intercept: 'info',
+      flush: 'fun1',
+    });
+    const c1 = new Custom1();
+    c1.info('a');
+    await sleep(200);
+    assert.deepEqual(logs, [[[ 'a' ]]]);
+    await sleep(1200);
+    assert.deepEqual(logs, [[[ 'a' ]]]);
+
+    logs = [];
+    const Custom2 = aggregate(Custom, {
+      interval: 100,
+      intercept: 'info',
+      flush: 'fun2',
+    });
+    const c2 = new Custom2();
+    c2.info('a');
+    await sleep(200);
+    assert.deepEqual(logs, []);
+    await sleep(1200);
+    assert.deepEqual(logs, [[[ 'a' ]]]);
   });
 
 });
