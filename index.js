@@ -83,6 +83,7 @@ class AggregateClass extends Event {
     const { interceptTransform, target } = this.options;
     if (interceptTransform) {
       args = interceptTransform.apply(target, args);
+      if (args === false) return;
     }
     this.cache.push(args);
   }

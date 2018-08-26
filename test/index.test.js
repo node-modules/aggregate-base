@@ -179,6 +179,7 @@ describe('test/index.test.js', () => {
       interval: 1,
       intercept: 'info',
       interceptTransform(num) {
+        if (num === 2) return false;
         return this.data + String(num);
       },
       flush: 'flush',
@@ -187,8 +188,9 @@ describe('test/index.test.js', () => {
     const logger = new AggregateLogger();
     logger.info(1);
     logger.info(2);
+    logger.info(3);
     await sleep(10);
-    assert.deepEqual(logs, [[ 'a1', 'a2' ]]);
+    assert.deepEqual(logs, [[ 'a1', 'a3' ]]);
   });
 
   it('should support flush function type', async () => {
