@@ -1,4 +1,10 @@
 
+1.2.0 / 2018-08-26
+==================
+
+**features**
+  * [[`b6f0afd`](http://github.com/node-modules/aggregate-base/commit/b6f0afd9e08ad6d685a9f2e228e7abbfbde16e11)] - feat: interceptTransform can be filtered (#4) (Haoliang Gao <<sakura9515@gmail.com>>)
+
 1.1.0 / 2018-08-25
 ==================
 
